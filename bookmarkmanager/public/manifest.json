@@ -8,10 +8,11 @@
 	"permissions": ["bookmarks", "tabs", "storage", "unlimitedStorage"],
 
 	"action": {
-		"default_popup": "index.html",
+		"default_popup": "popup.html",
 		"default_title": "Bookmark Manager"
 	},
 	"options_page": "options.html",
+
 	"icons": {
 		"16": "logo-small.png",
 		"48": "logo-small.png",
