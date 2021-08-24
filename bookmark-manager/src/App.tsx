@@ -22,11 +22,28 @@ const useStyles = makeStyles({
 
 function App() {
 	var bookmarksList: BookmarkItem[] = [];
+	const [testVar, setTestVar] = useState("");
+	const classes = useStyles();
+
+	// const onBMStart = () => {
+	// 	chrome.runtime.onInstalled.addListener((details) => {
+	// 		if (details.reason === "install") {
+	// 			console.log("first install");
+	// 			reason = "first install";
+	// 		} else if (details.reason === "update") {
+	// 			console.log("update");
+	// 			reason = "update";
+	// 		} else {
+	// 			reason = "unknown";
+	// 		}
+	// 	});
+	// };
+
 	const getChromeBookmarks = async () => {
 		console.log("testing getting bookmarks");
 
 		logTree(await chrome.bookmarks.getTree());
-		setNoOfBookmarksState(bookmarksList.length);
+		chrome.storage.local.set({ bookmarksList: bookmarksList });
 	};
 
 	const logItems = (bookmarkItem: chrome.bookmarks.BookmarkTreeNode) => {
@@ -44,9 +61,10 @@ function App() {
 		logItems(bookmarkItems[0]);
 	};
 
-	//const [gotData, setGotData] = useState<boolean>(false);
-	const [noOfBookmarksState, setNoOfBookmarksState] = useState(0);
-	const classes = useStyles();
+	useEffect(() => {
+		setTestVar("morp");
+	});
+
 	return (
 		<Card className={classes.App}>
 			<CardContent>
@@ -64,7 +82,7 @@ function App() {
 				>
 					Click here to load bookmarks
 				</Button>
-				{noOfBookmarksState > 0 ? <Typography>{noOfBookmarksState}</Typography> : null}
+				<Typography>{testVar}</Typography>
 			</CardActions>
 		</Card>
 	);

@@ -5,15 +5,16 @@
 	"description": "Organise your Chrome bookmarks with tags",
 	"version": "0.0.1",
 
+	"permissions": ["bookmarks", "tabs", "storage", "unlimitedStorage"],
+
 	"action": {
 		"default_popup": "index.html",
 		"default_title": "Bookmark Manager"
 	},
+	"options_page": "options.html",
 	"icons": {
 		"16": "logo-small.png",
 		"48": "logo-small.png",
 		"128": "logo-small.png"
-	},
-	"permissions": ["bookmarks", "tabs", "storage", "unlimitedStorage"],
-	"options_page": "options.html"
+	}
 }
