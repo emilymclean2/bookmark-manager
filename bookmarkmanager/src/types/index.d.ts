@@ -6,5 +6,6 @@ interface BookmarkItem {
 	index?: number;
 	parentId?: string;
 	title: string;
+	tags?: string[];
 	url?: string;
 }
