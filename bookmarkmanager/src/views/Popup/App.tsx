@@ -22,20 +22,20 @@ const useStyles = makeStyles({
 
 function App() {
 	var bookmarksList: BookmarkItem[] = [];
-	var reason = "";
+	//var reason = "";
 	const classes = useStyles();
 
-	chrome.runtime.onInstalled.addListener((details) => {
-		if (details.reason === "install") {
-			console.log("first install");
-			reason = "first install";
-		} else if (details.reason === "update") {
-			console.log("update");
-			reason = "update";
-		} else {
-			reason = "unknown";
-		}
-	});
+	// chrome.runtime.onInstalled.addListener((details) => {
+	// 	if (details.reason === "install") {
+	// 		console.log("first install");
+	// 		reason = "first install";
+	// 	} else if (details.reason === "update") {
+	// 		console.log("update");
+	// 		reason = "update";
+	// 	} else {
+	// 		reason = "unknown";
+	// 	}
+	// });
 
 	const getChromeBookmarks = async () => {
 		console.log("testing getting bookmarks");
@@ -49,7 +49,7 @@ function App() {
 
 	const logItems = (bookmarkItem: chrome.bookmarks.BookmarkTreeNode) => {
 		if (bookmarkItem.url) {
-			bookmarksList.push(bookmarkItem);
+			bookmarksList.push({ ...bookmarkItem, tags: [] });
 		}
 		if (bookmarkItem.children) {
 			bookmarkItem.children.forEach((child) => {

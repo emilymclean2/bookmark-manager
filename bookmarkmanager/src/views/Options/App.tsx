@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import clsx from "clsx";
 import {
-	Button,
+	Fab,
 	Typography,
 	AppBar,
 	Toolbar,
@@ -23,8 +23,8 @@ import {
 	Theme,
 	colors,
 } from "@material-ui/core";
-
-import { Menu, Search, ChevronLeft, ChevronRight, Inbox, Mail } from "@material-ui/icons";
+import { Menu, Search, ChevronLeft, ChevronRight, Inbox, Mail, Label } from "@material-ui/icons";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 const drawerWidth = 240;
 
@@ -141,14 +141,47 @@ function App() {
 	const [open, setOpen] = useState(false);
 	const [tagList, setTagList] = useState<string[]>([]);
 
+	const columns: GridColDef[] = [
+		{ field: "title", headerName: "Title", width: 600 },
+		{ field: "url", headerName: "Link", width: 500 },
+		{ field: "tags", headerName: "Tags", width: 300 },
+	];
+
 	useEffect(() => {
-		setTagList(["recipe", "tumblr", "pumpkin", "soup", "slow cooker"]);
+		getBookmarks();
+		setTagList([
+			"recipe",
+			"tumblr",
+			"soup",
+			"slow cooker",
+			"pressure cooker",
+			"instant pot",
+			"vegan",
+			"vegetarian",
+			"keto",
+			"dessert",
+			"breakfast",
+			"dinner",
+			"egg",
+			"delicious",
+			"lunch",
+			"brunch",
+			"chicken",
+			"beef",
+			"onion",
+			"cheese",
+			"pumpkin",
+			"slice",
+			"cake",
+			"cookie",
+			"muffin",
+		]);
 	}, []);
 
 	useEffect(() => {
 		if (bookmarksList.length > 0) {
 			setShowList(true);
-			//console.log(bookmarksList);
+			console.log(bookmarksList);
 		}
 	}, [bookmarksList]);
 
@@ -169,12 +202,11 @@ function App() {
 	const setTagsAutomatically = () => {
 		bookmarksList.forEach((bookmark) => {
 			tagList.forEach((tag) => {
-				if (bookmark.title.includes(tag) && !bookmark.tags?.includes(tag)) {
+				if ((bookmark.title.includes(tag) || bookmark.url?.includes(tag)) && !bookmark.tags?.includes(tag)) {
 					if (!bookmark.tags) {
 						bookmark.tags = [];
-					} else {
-						bookmark.tags.push(tag);
 					}
+					bookmark.tags.push(tag);
 				}
 			});
 		});
@@ -271,29 +303,34 @@ function App() {
 				})}
 			>
 				<div className={classes.drawerHeader} />
-				<Button
+				{/* <Button
 					size="small"
 					onClick={() => {
-						getBookmarks();
+						//getBookmarks();
 						setTagsAutomatically();
 					}}
 				>
-					Click here to load bookmarks
-				</Button>
-				{/* make this into a table */}
-				{showList
-					? bookmarksList.map((bookmark) => {
-							return (
-								<div>
-									<Typography variant="h6">
-										{bookmark.title} : {bookmark.url}
-									</Typography>
-								</div>
-							);
-					  })
-					: null}
+					Click here to set tags automatically
+				</Button> */}
+				<Fab
+					variant="extended"
+					color="primary"
+					onClick={() => {
+						setTagsAutomatically();
+					}}
+					style={{ margin: 10 }}
+				>
+					<Label style={{ padding: 10 }} />
+					Set tags automatically
+				</Fab>
+				{showList && (
+					<div style={{ display: "flex", height: 600 }}>
+						<div style={{ flexGrow: 1 }}>
+							<DataGrid rows={bookmarksList} columns={columns} />
+						</div>
+					</div>
+				)}
 			</main>
-			{/* <Typography style={{ fontSize: 50 }}>{bookmarksList[100]}</Typography> */}
 		</div>
 	);
 }
